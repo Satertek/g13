@@ -1,0 +1,2 @@
+# Loaded by g13d at startup / device hotplug (--config). Starts in mode M1.
+load m1.bind

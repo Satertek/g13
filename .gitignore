@@ -7,3 +7,4 @@ pbm2lpbm
 .settings/*
 GIT-VERSION.h
 GIT-VERSION-FILE
+build/

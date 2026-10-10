@@ -1,0 +1,52 @@
+# M2 - Mirrored right-hand keyboard (MirrorBoard layer 2)
+#
+#   ESC  P  O  I  U  Y  DEL
+#   SHFT ;  L  K  J  H  ENTER
+#        /  .  ,  M  N
+#           CTRL ALT SPACE
+#   Thumb LEFT: -> M3 (numbers)   Thumb DOWN: -> M1 (back to WASD)
+profile m2
+rgb 0 255 60
+mod 2
+load common.bind
+
+bind G1 KEY_ESC
+bind G2 KEY_P
+bind G3 KEY_O
+bind G4 KEY_I
+bind G5 KEY_U
+bind G6 KEY_Y
+bind G7 KEY_DELETE
+bind G8 KEY_LEFTSHIFT
+bind G9 KEY_SEMICOLON
+bind G10 KEY_L
+bind G11 KEY_K
+bind G12 KEY_J
+bind G13 KEY_H
+bind G14 KEY_ENTER
+bind G15 KEY_SLASH
+bind G16 KEY_DOT
+bind G17 KEY_COMMA
+bind G18 KEY_M
+bind G19 KEY_N
+bind G20 KEY_LEFTCTRL
+bind G21 KEY_LEFTALT
+bind G22 KEY_SPACE
+bind LEFT !load m3.bind
+bind DOWN !load m1.bind
+
+clear
+textmode 1
+font 8x8
+pos 0 0
+out  M2  MIRROR        
+textmode 0
+font 5x8
+pos 1 0
+out Esc P O I U Y Del
+pos 2 0
+out Shf ; L K J H Enter
+pos 3 0
+out  / . , M N  Ctl Alt Spc
+pos 4 0
+out M1 WASD [M2]Mirr M3 Num
