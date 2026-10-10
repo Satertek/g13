@@ -1,0 +1,24 @@
+# Shared settings loaded by every mode file (m1/m2/m3.bind).
+# Full-line comments are fine; do not put trailing comments on "out" or
+# "!command" lines (they are passed through verbatim).
+
+# Stick: arrow keys. Drop the default PageUp/PageDown edge zones and let the
+# up/down zones extend to the edges instead.
+delete zone STICK_PAGE*
+stickzone bounds STICK_UP 0.0 0.0 1.0 0.3
+stickzone bounds STICK_DOWN 0.0 0.7 1.0 1.0
+stickzone bounds STICK_LEFT 0.0 0.0 0.2 1.0
+stickzone bounds STICK_RIGHT 0.8 0.0 1.0 1.0
+bind STICK_UP KEY_UP
+bind STICK_DOWN KEY_DOWN
+bind STICK_LEFT KEY_LEFT
+bind STICK_RIGHT KEY_RIGHT
+
+# Mode keys. Paths are relative to ~/.config/g13 (g13d's working directory).
+bind M1 !load m1.bind
+bind M2 !load m2.bind
+bind M3 !load m3.bind
+bind MR !load m1.bind
+
+# Stick click
+bind TOP KEY_ESC

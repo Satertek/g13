@@ -1,0 +1,14 @@
+[Unit]
+Description=Logitech G13 userspace driver (g13d)
+Documentation=https://github.com/khampf/g13
+
+[Service]
+Type=simple
+# Relative paths in "!load <file>" key bindings resolve against this directory.
+WorkingDirectory=%h/.config/g13
+ExecStart=%h/.local/bin/g13d --config %h/.config/g13/default.bind --pipe_in %t/g13-0 --pipe_out %t/g13-0_out --umask 077
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

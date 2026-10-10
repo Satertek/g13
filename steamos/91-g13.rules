@@ -1,0 +1,5 @@
+# Logitech G13 (046d:c21c): let the logged-in user drive it with g13d.
+SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c21c", MODE="0666", TAG+="uaccess"
+# g13d emits keystrokes through uinput. SteamOS already grants this to the
+# active session; repeated here so the kit does not depend on that default.
+SUBSYSTEM=="misc", KERNEL=="uinput", TAG+="uaccess"

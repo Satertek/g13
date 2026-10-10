@@ -1,0 +1,52 @@
+# M3 - Numbers and symbols (MirrorBoard layer 3)
+#
+#   `    \  9  8  7  -  =
+#   SHFT '  6  5  4  [  ]
+#        .  3  2  1  0
+#           CTRL ALT SPACE
+#   Thumb LEFT: -> M1 (back to WASD)   Thumb DOWN: -> M2 (mirror)
+profile m3
+rgb 255 120 0
+mod 4
+load common.bind
+
+bind G1 KEY_GRAVE
+bind G2 KEY_BACKSLASH
+bind G3 KEY_9
+bind G4 KEY_8
+bind G5 KEY_7
+bind G6 KEY_MINUS
+bind G7 KEY_EQUAL
+bind G8 KEY_LEFTSHIFT
+bind G9 KEY_APOSTROPHE
+bind G10 KEY_6
+bind G11 KEY_5
+bind G12 KEY_4
+bind G13 KEY_LEFTBRACE
+bind G14 KEY_RIGHTBRACE
+bind G15 KEY_DOT
+bind G16 KEY_3
+bind G17 KEY_2
+bind G18 KEY_1
+bind G19 KEY_0
+bind G20 KEY_LEFTCTRL
+bind G21 KEY_LEFTALT
+bind G22 KEY_SPACE
+bind LEFT !load m1.bind
+bind DOWN !load m2.bind
+
+clear
+textmode 1
+font 8x8
+pos 0 0
+out  M3  NUM / SYM     
+textmode 0
+font 5x8
+pos 1 0
+out ` \ 9 8 7 - =
+pos 2 0
+out Shf ' 6 5 4 [ ]
+pos 3 0
+out  . 3 2 1 0  Ctl Alt Spc
+pos 4 0
+out M1 WASD M2 Mirr [M3]Num

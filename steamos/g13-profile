@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# -----------------------------------------------------------------------------
+# g13-profile: switch the G13 to a game profile for the duration of a command.
+#
+# Steam launch options:   ~/.local/bin/g13-profile <name> %command%
+# Manual switch:          g13-profile <name>
+# Back to default:        g13-profile default
+#
+# <name> is either a file in ~/.config/g13/games/<name>.bind, a file in
+# ~/.config/g13/<name>.bind, or a path to a .bind file.
+# -----------------------------------------------------------------------------
+set -uo pipefail
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/g13"
+PIPE="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/g13-0"
+
+usage() { echo "usage: ${0##*/} <profile> [command ...]" >&2; exit 2; }
+[[ $# -ge 1 ]] || usage
+NAME="$1"; shift
+
+send() {
+    # Non-blocking guard: only write if g13d is listening on the pipe.
+    [[ -p "${PIPE}" ]] || return 0
+    timeout 2 bash -c 'printf "%s\n" "$@" > "$0"' "${PIPE}" "$@" 2>/dev/null || true
+}
+
+resolve() {
+    local n="$1"
+    for f in "${n}" "${CONFIG_DIR}/games/${n}.bind" "${CONFIG_DIR}/${n}.bind"; do
+        [[ -f "${f}" ]] && { realpath "${f}"; return 0; }
+    done
+    return 1
+}
+
+activate() {
+    local name="$1" file label
+    if ! file="$(resolve "${name}")"; then
+        echo "${0##*/}: no profile '${name}' (looked in ${CONFIG_DIR}/games and ${CONFIG_DIR})" >&2
+        return 1
+    fi
+    if [[ "${name}" == "default" ]]; then
+        send "load ${file}"
+        return 0
+    fi
+    label="${name##*/}"; label="${label%.bind}"
+    # Game profiles start from a copy of the current mode, so M1-M3 keep working
+    # as an escape hatch. The LCD shows which profile is active.
+    send "profile game-${label}" \
+         "load ${file}" \
+         "mod 8" \
+         "clear" \
+         "font 8x8" \
+         "pos 0 0" "out GAME PROFILE" \
+         "pos 2 0" "out ${label:0:20}" \
+         "font 5x8" \
+         "pos 4 0" "out M1-M3: switch mode"
+}
+
+activate "${NAME}" || exit 1
+
+if [[ $# -gt 0 ]]; then
+    "$@"
+    rc=$?
+    activate default
+    exit "${rc}"
+fi
